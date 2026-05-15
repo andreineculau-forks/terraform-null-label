@@ -15,17 +15,22 @@ Supported styles (aka built-in presets with length, case, delimiter, etc):
   * confluent_topic
 * google provider
   * google (generic)
+  * google_bigquery_dataset
+  * google_bigquery_table
   * google_iam_role
   * google_iam_service_account
+  * google_pubsub_subscription
+  * google_pubsub_topic
+  * google_secret_manager_secret
   * google_storage_bucket
   * google_storage_bucket_dns
 * snowflake provider
   * snowflake (generic)
-  * snowflake_space
   * snowflake_database
   * snowflake_database_object
   * snowflake_schema
   * snowflake_schema_object
+  * snowflake_space
 
 <!-- markdownlint-disable -->
 <!-- BEGIN_TF_DOCS -->
@@ -78,7 +83,7 @@ No modules.
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br/>Characters matching the regex will be removed from the ID elements.<br/>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_replacement"></a> [replacement](#input\_replacement) | Replacement string for the regex\_replace\_chars.<br/>Default is `""` (empty string). | `string` | `null` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element.<br/>Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release'" | `string` | `null` | no |
-| <a name="input_style"></a> [style](#input\_style) | The naming style. Default is "aws".<br/><br/>Possible values:<br/>* `aws`<br/>* `aws_s3_bucket`<br/>* `confluent`<br/>* `confluent_connector`<br/>* `confluent_topic`<br/>* `google`<br/>* `google_iam_role`<br/>* `google_iam_service_account`<br/>* `google_storage_bucket`<br/>* `google_storage_bucket_dns`<br/>* `snowflake` ~ snowflake\_account\_object<br/>* `snowflake_space`<br/>* `snowflake_database`<br/>* `snowflake_database_object`<br/>* `snowflake_schema`<br/>* `snowflake_schema_object` | `string` | `null` | no |
+| <a name="input_style"></a> [style](#input\_style) | The naming style. Default is "aws".<br/><br/>Possible values:<br/>* `aws`<br/>* `aws_s3_bucket`<br/>* `confluent`<br/>* `confluent_connector`<br/>* `confluent_topic`<br/>* `google`<br/>* `google_bigquery_dataset`<br/>* `google_bigquery_table`<br/>* `google_iam_role`<br/>* `google_iam_service_account`<br/>* `google_pubsub_subscription`<br/>* `google_pubsub_topic`<br/>* `google_secret_manager_secret`<br/>* `google_storage_bucket`<br/>* `google_storage_bucket_dns`<br/>* `snowflake` ~ snowflake\_account\_object<br/>* `snowflake_database`<br/>* `snowflake_database_object`<br/>* `snowflake_schema`<br/>* `snowflake_schema_object`<br/>* `snowflake_space` | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br/>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_.<br/>A customer identifier, indicating who this instance of a resource is for" | `string` | `null` | no |
 

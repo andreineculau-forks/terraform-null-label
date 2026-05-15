@@ -28,16 +28,21 @@ variable "style" {
     * `confluent_connector`
     * `confluent_topic`
     * `google`
+    * `google_bigquery_dataset`
+    * `google_bigquery_table`
     * `google_iam_role`
     * `google_iam_service_account`
+    * `google_pubsub_subscription`
+    * `google_pubsub_topic`
+    * `google_secret_manager_secret`
     * `google_storage_bucket`
     * `google_storage_bucket_dns`
     * `snowflake` ~ snowflake_account_object
-    * `snowflake_space`
     * `snowflake_database`
     * `snowflake_database_object`
     * `snowflake_schema`
     * `snowflake_schema_object`
+    * `snowflake_space`
   EOT
 
   validation {
@@ -48,12 +53,16 @@ variable "style" {
       "confluent_connector",
       "confluent_topic",
       "google",
+      "google_bigquery_dataset",
+      "google_bigquery_table",
       "google_iam_role",
       "google_iam_service_account",
+      "google_pubsub_subscription",
+      "google_pubsub_topic",
+      "google_secret_manager_secret",
       "google_storage_bucket",
       "google_storage_bucket_dns",
       "snowflake",
-      "snowflake_space",
       "snowflake_database",
       "snowflake_database_object",
       "snowflake_schema",
@@ -68,12 +77,16 @@ variable "style" {
       `confluent_connector`,
       `confluent_topic`,
       `google`,
+      `google_bigquery_dataset`,
+      `google_bigquery_table`,
       `google_iam_role`,
       `google_iam_service_account`,
+      `google_pubsub_subscription`,
+      `google_pubsub_topic`,
+      `google_secret_manager_secret`,
       `google_storage_bucket`,
       `google_storage_bucket_dns`,
       `snowflake`, ~ snowflake_account_object
-      `snowflake_space`,
       `snowflake_database`,
       `snowflake_database_object`,
       `snowflake_schema`,

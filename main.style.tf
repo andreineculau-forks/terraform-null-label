@@ -38,20 +38,42 @@ locals {
     }
     confluent_connector = {
       id_length_limit     = 64
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.,&_+|[]]/"
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.,&_+|[]]/" # allow also . , & _ + | [ ]
     }
     confluent_topic = {
       id_length_limit     = 255
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_]/"
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_]/" # allow also _
+    }
+    google_bigquery_dataset = {
+      delimiter           = "_"
+      id_length_limit     = 1024
+      regex_replace_chars = "/[^_a-zA-Z0-9]/" # BigQuery identifier style: underscore-centric, no hyphen
+    }
+    google_bigquery_table = {
+      delimiter           = "_"
+      id_length_limit     = 1024
+      regex_replace_chars = "/[^_a-zA-Z0-9]/" # BigQuery identifier style: underscore-centric, no hyphen
     }
     google_iam_role = {
       delimiter           = "_"
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/"
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also .
       id_length_limit     = 64
       id_hash_unique      = true
     }
     google_iam_service_account = {
       id_length_limit = 30
+    }
+    google_pubsub_subscription = {
+      id_length_limit     = 255
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_.]/" # allow also _ and .
+    }
+    google_pubsub_topic = {
+      id_length_limit     = 255
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_.]/" # allow also _ and .
+    }
+    google_secret_manager_secret = {
+      id_length_limit     = 255
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_]/" # allow also _
     }
     google_storage_bucket = {
       id_length_limit = 63
@@ -81,7 +103,7 @@ locals {
     {
       label_order         = ["namespace", "tenant", "environment", "stage", "name", "attributes"]
       delimiter           = local._delimiter
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9]/"
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9]/" # default: only delimiter plus alphanumeric
       id_length_limit     = 63
       id_hash_length      = 12 # mimic CloudFormation's hash length
       id_hash_unique      = false
