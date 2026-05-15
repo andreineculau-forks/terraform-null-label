@@ -17,7 +17,7 @@ locals {
     id_hash_length      = 5
     label_key_case      = "title"
     label_value_case    = "lower"
-    style               = "aws"
+    style               = "default"
     id_hash_version     = 2
 
     # The default value of labels_as_tags cannot be included in this
