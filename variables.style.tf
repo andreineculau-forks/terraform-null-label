@@ -19,7 +19,7 @@ variable "style" {
   type        = string
   default     = null
   description = <<-EOT
-    The naming style. Default is "aws".
+    The naming style. Default is "general".
 
     Possible values:
     * `aws`
@@ -27,6 +27,7 @@ variable "style" {
     * `confluent`
     * `confluent_connector`
     * `confluent_topic`
+    * `general`
     * `google`
     * `google_bigquery_dataset`
     * `google_bigquery_table`
@@ -52,6 +53,7 @@ variable "style" {
       "confluent",
       "confluent_connector",
       "confluent_topic",
+      "general",
       "google",
       "google_bigquery_dataset",
       "google_bigquery_table",
@@ -76,6 +78,7 @@ variable "style" {
       `confluent`,
       `confluent_connector`,
       `confluent_topic`,
+      `general`,
       `google`,
       `google_bigquery_dataset`,
       `google_bigquery_table`,
