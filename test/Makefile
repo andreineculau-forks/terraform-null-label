@@ -1,3 +1,5 @@
+# editorconfig-checker-disable: max_line_length
+
 TEST_HARNESS ?= https://github.com/cloudposse/test-harness.git
 TEST_HARNESS_BRANCH ?= master
 TEST_HARNESS_PATH = $(realpath .test-harness)
@@ -5,7 +7,7 @@ BATS_ARGS ?= --tap
 BATS_LOG ?= test.log
 
 # Define a macro to run the tests
-define RUN_TESTS 
+define RUN_TESTS
 @echo "Running tests in $(1)"
 @cd $(1) && bats $(BATS_ARGS) $(addsuffix .bats,$(addprefix $(TEST_HARNESS_PATH)/test/terraform/,$(TESTS)))
 endef

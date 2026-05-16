@@ -1,3 +1,5 @@
+# editorconfig-checker-disable: max_line_length
+
 export TERRAFORM_VERSION ?= $(shell curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version' | cut -d. -f1)
 
 .DEFAULT_GOAL : all
