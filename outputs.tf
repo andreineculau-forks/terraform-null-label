@@ -1,3 +1,5 @@
+# tflint-ignore-file: sort_sorting
+
 output "id" {
   value       = local.enabled ? local.id : ""
   description = "Disambiguated ID string restricted to `id_length_limit` characters in total"
