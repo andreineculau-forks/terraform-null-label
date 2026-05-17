@@ -56,9 +56,9 @@ locals {
     }
     google_iam_role = {
       delimiter           = "_"
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also .
-      id_length_limit     = 64
       id_hash_unique      = true
+      id_length_limit     = 64
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also .
     }
     google_iam_service_account = {
       id_length_limit = 30
@@ -101,14 +101,14 @@ locals {
   defaults = merge(
     local._defaults,
     {
-      label_order         = ["namespace", "tenant", "environment", "stage", "name", "attributes"]
       delimiter           = local._delimiter
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9]/" # default: only delimiter plus alphanumeric
-      id_length_limit     = 63
       id_hash_length      = 12 # mimic CloudFormation's hash length
       id_hash_unique      = false
+      id_length_limit     = 63
       label_key_case      = "title"
+      label_order         = ["namespace", "tenant", "environment", "stage", "name", "attributes"]
       label_value_case    = "lower"
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9]/" # default: only delimiter plus alphanumeric
     },
     lookup(local._style_family_overrides, local._style_family, {}),
     lookup(local._style_overrides, local._style, {})

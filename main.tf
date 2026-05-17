@@ -45,6 +45,7 @@ locals {
 
   raw_input = merge(
     {
+      # tflint-ignore: sort_sorting
       enabled             = true
       namespace           = null
       tenant              = null

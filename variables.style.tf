@@ -1,3 +1,5 @@
+# tflint-ignore-file: terraform_standard_module_structure
+
 variable "id_hash_version" {
   type        = number
   default     = 2
