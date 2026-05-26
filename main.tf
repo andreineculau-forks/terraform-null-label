@@ -86,12 +86,12 @@ locals {
     # It would be nice to use coalesce here, but we cannot, because it
     # is an error for all the arguments to coalesce to be empty.
     enabled   = try(coalesce(var.enabled, local.raw_input.enabled), true)
-    namespace = try(coalesce(var.namespace, local.raw_input.namespace), null)
+    namespace = var.namespace != null ? var.namespace : local.raw_input.namespace
     # tenant was introduced in v0.25.0, prior context versions do not have it
-    tenant      = try(coalesce(var.tenant, local.raw_input.tenant), null)
-    environment = try(coalesce(var.environment, local.raw_input.environment), null)
-    stage       = try(coalesce(var.stage, local.raw_input.stage), null)
-    name        = try(coalesce(var.name, local.raw_input.name), null)
+    tenant      = var.tenant != null ? var.tenant : local.raw_input.tenant
+    environment = var.environment != null ? var.environment : local.raw_input.environment
+    stage       = var.stage != null ? var.stage : local.raw_input.stage
+    name        = var.name != null ? var.name : local.raw_input.name
     delimiter   = try(coalesce(var.delimiter, local.raw_input.delimiter), null)
     # modules tack on attributes (passed by var) to the end of the list (passed by context)
     attributes = compact(distinct(concat(local.raw_input.attributes, var.attributes)))

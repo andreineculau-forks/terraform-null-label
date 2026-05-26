@@ -81,6 +81,28 @@ run "tags_are_lower_case" {
   }
 }
 
+run "empty_string_clears_inherited_context" {
+  command = plan
+  variables {
+    context = {
+      namespace   = "namespace"
+      tenant      = "tenant"
+      environment = "environment"
+      stage       = "stage"
+    }
+    namespace = ""
+    name      = "name"
+  }
+  assert {
+    condition     = local.namespace == ""
+    error_message = "namespace should be cleared by explicit empty string"
+  }
+  assert {
+    condition     = local.id == "tenant-environment-stage-name"
+    error_message = "unexpected transformations"
+  }
+}
+
 run "google_iam_role" {
   command = plan
   variables {
