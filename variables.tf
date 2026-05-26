@@ -143,6 +143,17 @@ variable "label_order" {
     EOT
 }
 
+variable "label_order_dns" {
+  type        = list(string)
+  default     = null
+  description = <<-EOT
+    Labels to concatenate with `.` and append after the delimiter-joined portion of `id`.
+    Labels listed here are removed from `label_order` when constructing `id`.
+    Defaults to `["namespace"]` for `google_storage_bucket_dns` and `[]` for other styles.
+    Valid labels are `namespace`, `tenant`, `environment`, `stage`, `name`, and `attributes`.
+    EOT
+}
+
 variable "regex_replace_chars" {
   type        = string
   default     = null

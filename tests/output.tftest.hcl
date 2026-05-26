@@ -30,6 +30,7 @@ run "output" {
       additional_tag_map  = {}
       delimiter           = null
       descriptor_formats  = {}
+      label_order_dns     = null
       enabled             = true
       id_hash_length      = null
       id_hash_unique      = null
@@ -58,6 +59,7 @@ run "output" {
       additional_tag_map  = {}
       delimiter           = "-"
       descriptor_formats  = {}
+      label_order_dns     = []
       enabled             = true
       id_hash_length      = 12
       id_hash_unique      = false

@@ -79,7 +79,10 @@ locals {
       id_length_limit = 63
     }
     google_storage_bucket_dns = {
-      id_length_limit = 255
+      label_order_dns     = ["namespace"]
+      id_length_limit     = 255
+      label_order         = ["environment", "name", "attributes"]
+      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also . for DNS namespace suffix
     }
     snowflake_database = {
       label_order = ["namespace", "tenant", "environment"]
@@ -102,6 +105,7 @@ locals {
     local._defaults,
     {
       delimiter           = local._delimiter
+      label_order_dns     = []
       id_hash_length      = 12 # mimic CloudFormation's hash length
       id_hash_unique      = false
       id_length_limit     = 63

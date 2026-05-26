@@ -39,7 +39,7 @@ variable "style" {
     * `google_pubsub_topic`
     * `google_secret_manager_secret`
     * `google_storage_bucket`
-    * `google_storage_bucket_dns`
+    * `google_storage_bucket_dns` ~ `<environment>-<name>-<attributes>.<namespace>`
     * `snowflake` ~ snowflake_account_object
     * `snowflake_database`
     * `snowflake_database_object`
@@ -90,7 +90,7 @@ variable "style" {
       `google_pubsub_topic`,
       `google_secret_manager_secret`,
       `google_storage_bucket`,
-      `google_storage_bucket_dns`,
+      `google_storage_bucket_dns`, ~ `<environment>-<name>-<attributes>.<namespace>`
       `snowflake`, ~ snowflake_account_object
       `snowflake_database`,
       `snowflake_database_object`,

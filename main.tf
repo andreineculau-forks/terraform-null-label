@@ -58,6 +58,7 @@ locals {
       additional_tag_map  = {}
       regex_replace_chars = null
       label_order         = []
+      label_order_dns     = null
       replacement         = null
       id_length_limit     = null
       id_hash_length      = null
@@ -98,6 +99,7 @@ locals {
 
     additional_tag_map  = merge(local.raw_input.additional_tag_map, var.additional_tag_map)
     label_order         = try(coalesce(var.label_order, local.raw_input.label_order), [])
+    label_order_dns     = var.label_order_dns != null ? var.label_order_dns : local.raw_input.label_order_dns
     regex_replace_chars = try(coalesce(var.regex_replace_chars, local.raw_input.regex_replace_chars), null)
     replacement         = try(coalesce(var.replacement, local.raw_input.replacement), null)
     id_length_limit     = try(coalesce(var.id_length_limit, local.raw_input.id_length_limit), null)
@@ -150,8 +152,15 @@ locals {
   stage       = local.formatted_labels["stage"]
   name        = local.formatted_labels["name"]
 
-  delimiter        = coalesce(local.input.delimiter, local.defaults.delimiter)
-  label_order      = coalescelist(coalesce(local.input.label_order, []), local.defaults.label_order)
+  delimiter = coalesce(local.input.delimiter, local.defaults.delimiter)
+  label_order_dns = [
+    for l in(local.input.label_order_dns != null ? local.input.label_order_dns : local.defaults.label_order_dns) :
+    l
+  ]
+  label_order = [
+    for l in coalescelist(coalesce(local.input.label_order, []), local.defaults.label_order) :
+    l if !contains(local.label_order_dns, l)
+  ]
   replacement      = try(coalesce(local.input.replacement, local.defaults.replacement), local.defaults.replacement)
   id_length_limit  = coalesce(local.input.id_length_limit, local.defaults.id_length_limit)
   id_hash_length   = coalesce(local.input.id_hash_length, local.defaults.id_hash_length)
@@ -209,9 +218,16 @@ locals {
     attributes  = join(local.delimiter, local.attributes)
   }
 
-  labels = [for l in local.label_order : local.id_context[l] if length(local.id_context[l]) > 0]
+  labels     = [for l in local.label_order : local.id_context[l] if length(local.id_context[l]) > 0]
+  labels_dns = [for l in local.label_order_dns : local.id_context[l] if length(local.id_context[l]) > 0]
 
-  id_full = join(local.delimiter, local.labels)
+  id_full_prefix = join(local.delimiter, local.labels)
+  id_full_suffix = join(".", local.labels_dns)
+  id_full = (
+    length(local.id_full_prefix) == 0 ? local.id_full_suffix :
+    length(local.id_full_suffix) == 0 ? local.id_full_prefix :
+    "${local.id_full_prefix}.${local.id_full_suffix}"
+  )
   # Create a truncated ID if needed
   delimiter_length = length(local.delimiter)
   # Calculate length of normal part of ID, leaving room for delimiter and hash
@@ -279,6 +295,7 @@ locals {
     tags                = local.tags
     additional_tag_map  = local.additional_tag_map
     label_order         = local.label_order
+    label_order_dns     = local.label_order_dns
     regex_replace_chars = local.regex_replace_chars
     id_length_limit     = local.id_length_limit
     label_key_case      = local.label_key_case
