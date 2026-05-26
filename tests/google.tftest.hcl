@@ -208,7 +208,7 @@ run "google_storage_bucket_dns" {
     style       = "google_storage_bucket_dns"
   }
   assert {
-    condition     = local.label_order == ["environment", "name", "attributes"]
+    condition     = local.label_order == ["tenant", "environment", "stage", "name", "attributes"]
     error_message = "unexpected label order"
   }
   assert {
@@ -216,11 +216,11 @@ run "google_storage_bucket_dns" {
     error_message = "id_length_limit should be 255 characters"
   }
   assert {
-    condition     = local.id_full == "dev-name-attr1.namespace.com"
+    condition     = local.id_full == "tenant-dev-stage-name-attr1.namespace.com"
     error_message = "unexpected transformations"
   }
   assert {
-    condition     = local.id == "dev-name-attr1.namespace.com"
+    condition     = local.id == "tenant-dev-stage-name-attr1.namespace.com"
     error_message = "unexpected transformations"
   }
 }
@@ -238,7 +238,7 @@ run "google_storage_bucket_dns_custom_label_order_dns" {
     style           = "google_storage_bucket_dns"
   }
   assert {
-    condition     = local.label_order == ["name", "attributes"]
+    condition     = local.label_order == ["stage", "name", "attributes"]
     error_message = "unexpected label order"
   }
   assert {
@@ -246,11 +246,11 @@ run "google_storage_bucket_dns_custom_label_order_dns" {
     error_message = "unexpected DNS label order"
   }
   assert {
-    condition     = local.id_full == "name-attr1.dev.tenant.namespace.com"
+    condition     = local.id_full == "stage-name-attr1.dev.tenant.namespace.com"
     error_message = "unexpected transformations"
   }
   assert {
-    condition     = local.id == "name-attr1.dev.tenant.namespace.com"
+    condition     = local.id == "stage-name-attr1.dev.tenant.namespace.com"
     error_message = "unexpected transformations"
   }
 }
