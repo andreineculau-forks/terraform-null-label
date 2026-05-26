@@ -20,6 +20,8 @@ locals {
     # General
     coalesce(var.delimiter, "-")
   )
+  # tflint-ignore: terraform_naming_convention
+  _regex_replace_chars_core = "${local._delimiter}a-zA-Z0-9" # default: only delimiter plus alphanumeric characters
 
   # tflint-ignore: terraform_naming_convention
   _style_family_overrides = {
@@ -40,11 +42,11 @@ locals {
     }
     confluent_connector = {
       id_length_limit     = 64
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.,&_+|[]]/" # allow also . , & _ + | [ ]
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}.,&_+|[]]/" # allow also . , & _ + | [ ]
     }
     confluent_topic = {
       id_length_limit     = 255
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_]/" # allow also _
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}_]/" # allow also _
     }
     google_bigquery_dataset = {
       delimiter           = "_"
@@ -60,22 +62,22 @@ locals {
       delimiter           = "_"
       id_hash_unique      = true
       id_length_limit     = 64
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also .
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}.]/" # allow also .
     }
     google_iam_service_account = {
       id_length_limit = 30
     }
     google_pubsub_subscription = {
       id_length_limit     = 255
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_.]/" # allow also _ and .
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}_.]/" # allow also _ and .
     }
     google_pubsub_topic = {
       id_length_limit     = 255
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_.]/" # allow also _ and .
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}_.]/" # allow also _ and .
     }
     google_secret_manager_secret = {
       id_length_limit     = 255
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9_]/" # allow also _
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}_]/" # allow also _
     }
     google_storage_bucket = {
       id_length_limit = 63
@@ -84,7 +86,7 @@ locals {
       label_order_dns     = ["namespace"]
       id_length_limit     = 255
       label_order         = [for l in local._label_order : l if l != "namespace"]
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also . for DNS namespace suffix
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}.]/" # allow also . for DNS namespace suffix
     }
     snowflake_database = {
       label_order = ["namespace", "tenant", "environment"]
@@ -114,7 +116,7 @@ locals {
       label_key_case      = "title"
       label_order         = local._label_order
       label_value_case    = "lower"
-      regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9]/" # default: only delimiter plus alphanumeric
+      regex_replace_chars = "/[^${local._regex_replace_chars_core}]/"
     },
     lookup(local._style_family_overrides, local._style_family, {}),
     lookup(local._style_overrides, local._style, {})
