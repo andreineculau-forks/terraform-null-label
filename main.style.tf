@@ -1,5 +1,7 @@
 locals {
   # tflint-ignore: terraform_naming_convention
+  _label_order = ["namespace", "tenant", "environment", "stage", "name", "attributes"]
+  # tflint-ignore: terraform_naming_convention
   _style = coalesce(var.style, local._defaults.style)
   # tflint-ignore: terraform_naming_convention
   _style_family = (
@@ -81,7 +83,7 @@ locals {
     google_storage_bucket_dns = {
       label_order_dns     = ["namespace"]
       id_length_limit     = 255
-      label_order         = ["environment", "name", "attributes"]
+      label_order         = [for l in local._label_order : l if l != "namespace"]
       regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9.]/" # allow also . for DNS namespace suffix
     }
     snowflake_database = {
@@ -110,7 +112,7 @@ locals {
       id_hash_unique      = false
       id_length_limit     = 63
       label_key_case      = "title"
-      label_order         = ["namespace", "tenant", "environment", "stage", "name", "attributes"]
+      label_order         = local._label_order
       label_value_case    = "lower"
       regex_replace_chars = "/[^${local._delimiter}a-zA-Z0-9]/" # default: only delimiter plus alphanumeric
     },
