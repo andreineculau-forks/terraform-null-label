@@ -70,11 +70,11 @@ run "output" {
       label_value_case    = "lower"
       labels_as_tags      = ["attributes", "environment", "name", "namespace", "stage", "tenant"]
       regex_replace_chars = "/[^-a-zA-Z0-9]/"
-      style               = "aws"
+      style               = "default"
       tags = {
         Attributes  = "attr1-attr2"
         Environment = "environment"
-        Name        = "namespace-tenant-environment-stage-test-attr1-attr2"
+        Name        = "test"
         Namespace   = "namespace"
         Stage       = "stage"
         Tenant      = "tenant"
